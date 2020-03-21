@@ -77,7 +77,7 @@ camelCaser takes in a C string, which represents an arbitrary amount of sentence
 
 For those who like pictures I will explain what the return value of camelCaser looks like in memory.
 
-![img](F:\思维》技术》金融&经济\CS课程\操作系统\UIUC-CS-241 System Programming\assets\char_double_pointer.jpg)
+![](F:\Project\UIUC-CS-241-System-Programming\assets\char_double_pointer.jpg)
 
 In the above picture you can see that we have a char double pointer called ‘array’. Now in this scenario the char double pointer is a character pointer that points to the beginning of a NULL terminated array of character pointers. Each of the character pointers in the array point to the beginning of a NULL terminated char array that can be anywhere in memory in a separate buffer. The reason why these arrays are NULL terminated is because your user will need to know when these arrays end so they do not start reading garbage values. This means that
 
