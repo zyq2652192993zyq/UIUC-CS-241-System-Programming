@@ -60,6 +60,82 @@ $ gcc -lm -Wall -fmax-errors=10 -Wextra program.c -o program
 
 ## 2.Environment Variables
 
+这个部分在视频0090-Environment。
+
+比如想要打印环境变量的信息：
+
+```c
+#include <stdio.h>
+
+extern char **environ;
+
+int main()
+{
+    char **ptr = environ;
+    while (*ptr) {
+        prinf("%s\n", *ptr);
+        ++ptr;
+    }
+    
+    return 0;
+}
+```
+
+```bash
+$ ./main
+# 这里将会打印一长串环境变量信息，只截取其中一部分 
+LANG=C.UTF-8
+USER=kylin
+PWD=/home/kylin
+HOME=/home/kylin
+NAME=Lenovo-PC
+```
+
+如果想改变环境变量，那么可以在终端输入：
+
+```bash
+$ export NAME=PC
+```
+
+再次运行程序查看，发现`NAME`变量被设置成了`PC`：
+
+```bash
+$ ./main
+LANG=C.UTF-8
+USER=kylin
+PWD=/home/kylin
+HOME=/home/kylin
+NAME=PC
+```
+
+另外一种查看环境变量信息的方法是，比如仍然想查看`NAME`的信息：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    char *name = getenv("NAME");
+    printf("%s\n", name);
+    
+    return 0;
+}
+```
+
+```bash
+$ ./main
+LANG=C.UTF-8
+USER=kylin
+PWD=/home/kylin
+HOME=/home/kylin
+NAME=PC
+```
+
+
+
+
+
 
 
 ## 3.String searching(Strings are just char arrays)
@@ -100,7 +176,60 @@ $ gcc -lm -Wall -fmax-errors=10 -Wextra program.c -o program
 
 ## 3.getline is useful
 
+`getline`的函数原型是：
 
+```c
+ #include <stdio.h>                                        
+                                                           
+ ssize_t getline(char **lineptr, size_t *n, FILE *stream); 
+```
+
+用法：
+
+```c
+#include <stdio.h>
+
+int main()
+{
+	char *buff = NULL;
+	ssize_t res = getline(&buff, &res, stdin);
+	printf("%d : %s\n", (int)res, buff);
+
+	return 0;
+}
+```
+
+```bash
+$ gcc main.c -o main
+$ ./main
+ABCDE
+6 : ABCDE
+
+$
+```
+
+注意到函数`getline`读入了一个空格，另外`getline`函数动态分配了内存，需要手动释放。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	char *buff = NULL;
+	ssize_t res = getline(&buff, &res, stdin);
+    if (res > 0 && buff[res - 1] == '\n') {
+        buff[res - 1] = '\0';
+    }
+    
+	printf("%d : %s\n", (int)res, buff);
+    free(buff);
+
+	return 0;
+}
+```
+
+这样输出结果后，末尾不会多出一个空格。
 
 # Chapter 6
 

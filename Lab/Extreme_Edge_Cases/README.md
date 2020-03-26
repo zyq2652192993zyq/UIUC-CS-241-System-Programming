@@ -1,4 +1,4 @@
-> # Lab Extreme Edge Cases
+># Lab-2 Extreme Edge Cases
 
 # Backstory
 
@@ -240,15 +240,16 @@ void print_output(char **output){
     printf("-----------------------------------------------------------------------------------------\n");
 }
 
-char **camel_caser(const char *input, int *cnt)
+char **camel_caser(const char *input)
 {
+	int cnt = 0;
 	int len = strlen(input);
 	//统计标点符号个数，也是子串的个数
 	for (int i = 0; i < len; ++i) {
-		if (ispunct(input[i])) ++(*cnt);
+		if (ispunct(input[i])) ++(cnt);
 	}
 	//切割出每个子串
-	int num = *cnt;
+	int num = cnt;
 	char **output = malloc(num * sizeof(char *));
 	int start = 0, end = 0;
 	int pos = 0;
@@ -291,13 +292,13 @@ char **camel_caser(const char *input, int *cnt)
 	return res;
 }
 
-void makeEmpty(char **output, int cnt)
+void makeEmpty(char **output)
 {
-	for (int i = 0; i < cnt; ++i) {
-		free(output[i]);
-		output[i] = NULL;
+	while (*output) {
+		char *tmp = *output;
+		++output;
+		free(tmp); tmp = NULL;
 	}
-	free(output); output = NULL;
 }
 
 int main() {
@@ -309,11 +310,9 @@ int main() {
 
     char ** input = inputs;
     while(*input){
-        int cnt = 0; //记录子串的个数
-        char **output = camel_caser(*input, &cnt);
-        //printf("%d\n", cnt);
+        char **output = camel_caser(*input);
         print_output(output);
-        makeEmpty(output, cnt);
+        makeEmpty(output);
         input++;
     }
 
@@ -321,7 +320,13 @@ int main() {
 }
 ```
 
-```bash
+最后用valgrind检验无内存泄漏。然后把上面的思路按照多文件编程规范编写即可。
 
-```
+----
+
+需要完善的时`camlCaser_main.c`文件，通过此文件来调用我们的测试用例。
+
+需要自主写出`camlCaser.c`的实现，接口被确定为`char ** camel_caser(const char* input)`。
+
+在`camelCaser_test.c`里面补充测试用例。
 
