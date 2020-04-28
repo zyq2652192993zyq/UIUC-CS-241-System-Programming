@@ -267,5 +267,98 @@ struct timespec {
 * `print_environment_change_failed`：在实现`env`命令里用到，如果修改环境变量失败的处理。
 * `display_results`：实现`time`命令的时候，输出最终的时间值。
 
------
+程序使用方法：
+
+```bash
+$ make
+$ ./time sleep 2
+sleep 2 took 2.010161 seconds
+# compare with time command
+$ time sleep 2
+real    0m2.010s
+user    0m0.000s
+sys     0m0.000s
+```
+
+# 实现`env`命令
+
+`env`命令如果不带参数，则显示当前环境列表，如果带参数，则至少两个参数，命令调用方式：
+
+```bahs
+./env <var-list> <command-name>
+```
+
+其中`<var-list>`是用逗号分隔的对环境变量的修改，`<command-name>`是在执行完前面的修改后需要执行的命令。额外的参数都视作`<command-name>`的一部分。
+
+环境变量的修改都遵从`<destvar>=<value>`的格式，`<destvar>`是环境变量的名称，`<value>`是新值。
+
+与这部分相关联的在《APUE》的7.5节，但是介绍的很简略，另外网站还提供了GNU的[参考](https://www.gnu.org/software/libc/manual/html_node/Environment-Access.html#Environment-Access)，其实也可以通过`man`来查看。在`HW0`的3.2较少了`export`的用法和显示环境列表的写法。
+
+然后考虑以下程序的设计思路，首先需要检验参数的个数，如果参数只有1个，只需打印环境变量的列表；只有两个，说明传递参数错误。
+
+参数多于两个的时候，前一个是逗号分隔的环境变量名和修改值，剩下的参数是命令，于是很自然的我们需要手写一个`split`函数来切割出逗号之间的部分，剩下的部分`fork(0)`出一个新的进程，利用`execvp`来执行命令，就很类似`time`命令的实现部分。
+
+分析到这里，难点其实就涉及一个`split`函数，复习一下`strtok`函数：
+
+```c
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <string.h>
+
+void split(char *str, char *delim, char **s)
+{
+	if (!str || !delim) return;
+	
+	char *ptr = strtok(str, delim);
+	int cnt = 0;
+	while (ptr) {
+		s[cnt++] = ptr;
+		ptr = strtok(NULL, delim);
+	}
+}
+ 
+int main()
+{  
+    char s[] = "192,168,0,26";  
+    char *delim = ",";
+    int num = 0;
+	int n = strlen(s);
+
+	printf("%d\n", n);
+
+	for (int i = 0; i < n; ++i) {
+		if (s[i] == ',') ++num;
+	}
+	++num;
+    printf("%d\n", num);
+
+	char **ch = (char **)malloc(num * sizeof(char *));
+	split(s, ",", ch); 
+    
+    split(s, delim, ch);
+    for (int i = 0; i < num; ++i) {
+        printf("%s ", ch[i]);   
+    }
+
+	free(ch);
+
+	return 0;
+}
+```
+
+在对一个长字符串分割的时候，第一次调用时，`strtok`函数的第一个参数传入要分割的字符串，而第二次以及后面再次调用该函数的时候，`strtok`函数的第一个参数应该传入`NULL`，这是因为在`strtok`第一个参数为`NULL`的时候，该函数默认使用上一次未分割完的字符串的未分割的起始位置作为本次分割的起始位置，直到分割结束为止。
+
+上面的只是个小`demo`，完整的见`env.c`，写完后检验是否存在内存泄漏，发现无内存泄漏现象：
+
+```
+==531== HEAP SUMMARY:
+==531==     in use at exit: 0 bytes in 0 blocks
+==531==   total heap usage: 1 allocs, 1 frees, 1,024 bytes allocated
+==531==
+==531== All heap blocks were freed -- no leaks are possible
+==531==
+==531== For counts of detected and suppressed errors, rerun with: -v
+==531== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
 

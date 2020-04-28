@@ -54,9 +54,9 @@ char ** camel_caser(const char* input)
 		}
 	}
 
-	for (int i = 0; i < num; ++i) {
-		free(output[i]); output[i] = NULL;
-	}
+	//for (int i = 0; i < num; ++i) {
+	//	free(output[i]); output[i] = NULL;
+	//}
 	free(output); output = NULL;
 
 	return res;

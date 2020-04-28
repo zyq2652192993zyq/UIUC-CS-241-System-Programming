@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     }
     else if (pid == 0) {
         int status = execvp(command[0], command); /* -1 on error */
-        if (!status) print_exec_failed();
+        if (status) print_exec_failed();
     }
     else {
         //record start time and end time

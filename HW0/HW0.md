@@ -132,11 +132,48 @@ HOME=/home/kylin
 NAME=PC
 ```
 
+这里`getenv()`的函数原型是：
 
+```c
+char * getenv (const char *name)
+```
 
+还有两个重要的函数`setenv()`和`putenv()`，函数原型是：
 
+```c
+int putenv (char *string); //If the function is successful it returns 0
+int setenv (const char *name, const char *value, int replace);
+```
 
+这两个函数都能修改环境变量，但是`setenv`只能修改当前进程的环境变量，如果当前进程结束，修改的部分就失效了，而`putenv`则是永久的修改。
 
+```c
+#include <stdio.h>                       
+#include <stdlib.h>                      
+#include <unistd.h>                      
+                                         
+extern char **environ;                   
+                                         
+int main()                               
+{                                        
+    printf("NAME=%s\n", getenv("NAME")); 
+                                         
+    char *ch = "NAME=PC";                
+    int status = putenv(ch);             
+    if (status) printf("error\n");       
+    printf("NAME=%s\n", getenv("NAME")); 
+                                         
+    return 0;                            
+}                                        
+```
+
+```bash
+$ ./main
+NAME=Lenovo-PC
+NAME=PC
+```
+
+<https://www.cnblogs.com/Hxinguan/p/5010121.html>
 
 ## 3.String searching(Strings are just char arrays)
 

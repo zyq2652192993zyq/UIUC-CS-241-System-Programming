@@ -244,13 +244,11 @@ comparator gt = greater_than;
 
 This declares a function type comparator that accepts two `void*` params and returns an integer.
 
-
-
 # Week 2
 
-[Lab: Extreme Edge Cases](https://courses.engr.illinois.edu/cs241/sp2016/extreme_edge_cases)
+[Lab: Extreme Edge Cases](https://courses.engr.illinois.edu/cs241/sp2016/extreme_edge_cases.html)
 
-[MP: Pointers Gone Wild](https://courses.engr.illinois.edu/cs241/sp2016/pointers_gone_wild)
+[MP: Pointers Gone Wild](https://courses.engr.illinois.edu/cs241/sp2016/pointers_gone_wild.html)
 
 ## 3.C Crash Course 2
 
@@ -822,9 +820,9 @@ Both child and parent should `close` (or `fclose`) their file descriptors or fil
 
 # Week 3
 
-[Lab: Utilities Unleashed](https://courses.engr.illinois.edu/cs241/sp2016/utilities_unleashed)
+[Lab: Utilities Unleashed](https://courses.engr.illinois.edu/cs241/sp2016/utilities_unleashed.html)
 
-[MP: Vector](https://courses.engr.illinois.edu/cs241/sp2016/vector)
+[MP: Vector](https://courses.engr.illinois.edu/cs241/sp2016/vector.html)
 
 ## 6.Forking Processes
 
@@ -1208,13 +1206,17 @@ In practice first-fit and next-fit (which is not discussed here) are often commo
 
 # Week 4
 
-[Lab: Mini Valgrind](https://courses.engr.illinois.edu/cs241/sp2016/Mini%20Valgrind)
+[Lab: Mini Valgrind](https://courses.engr.illinois.edu/cs241/sp2016/mini_valgrind.html)
 
-[MP: Shell](https://courses.engr.illinois.edu/cs241/sp2016/Shell)
+[MP: Text Editor](https://courses.engr.illinois.edu/cs241/sp2016/text_editor.html)
 
 ## 9.Memory allocators I
 
 [wikibook week 4](https://github.com/angrave/SystemProgramming/wiki#week-4)
+
+
+
+
 
 ## 10.Memory allocators II
 
