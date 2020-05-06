@@ -1,8 +1,12 @@
 > # 	UIUC-CS-241: System Programming
 
-Textbook: [WikiBook](https://github.com/angrave/SystemProgramming/wiki)
+# Course Information
+
+Textbook: [WikiBook](https://github.com/angrave/SystemProgramming/wiki) or CS 241 Course Book in PDF
 
 Course website: <http://cs241.cs.illinois.edu/schedule.html>
+
+Course schedule: https://courses.engr.illinois.edu/cs241/sp2016/schedule.html#currentWeek
 
 Labs: <https://courses.engr.illinois.edu/cs241/sp2016/labs.html>
 
@@ -1214,7 +1218,24 @@ In practice first-fit and next-fit (which is not discussed here) are often commo
 
 [wikibook week 4](https://github.com/angrave/SystemProgramming/wiki#week-4)
 
+Let’s try to write Malloc. Here is our first attempt at it – the naive version.
 
+```c
+void* malloc(size_t size)
+{
+    // Ask the system for more bytes by extending the heap space.
+    // sbrk returns -1 on failure
+    void *p = sbrk(size);
+    if(p == (void *) -1) return NULL; // No space left
+    return p;
+}
+void free() {/* Do nothing */}
+```
+
+Above is the simplest implementation of malloc, there are a few drawbacks though.
+
+* **System calls are slow compared to library calls**. We should reserve a large amount of memory and only occasionally ask for more from the system.
+* No reuse of freed memory. Our program never re-uses heap memory - it keeps asking for a bigger heap.
 
 
 
@@ -1224,7 +1245,9 @@ In practice first-fit and next-fit (which is not discussed here) are often commo
 
 ## 11.Threads
 
-[wikibook week 4](https://github.com/angrave/SystemProgramming/wiki#week-4)
+[wikibook week 4](https://github.com/angrave/SystemProgramming/wiki/Pthreads%2C-Part-1%3A-Introduction)
+
+
 
 # Week 5
 
