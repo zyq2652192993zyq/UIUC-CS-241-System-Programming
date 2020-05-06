@@ -51,4 +51,3 @@ Compared with CSAPP, the outstanding feature of this course is that it is very f
 * Week 12: Map reduce
 * Week 14: Wearables
 
-this is a test
