@@ -1,11 +1,11 @@
 > # Mangled Mutexes
 
-# Learning objectives
+## Learning objectives
 
 - Applying threads to an embarrasingly parallel problem.
 - Become more familiar with synchronization primitives, namely mutexes.
 
-# Overview
+## Overview
 
 ### Recommended Readings:
 
@@ -21,7 +21,7 @@ Given two integers, `a` and `b`, you must compute the number of primes between t
 
 One approach to this problem is known the **trial division**. You can read more about it in this [useful tutorial](https://www.khanacademy.org/computing/computer-science/cryptography/comp-number-theory/a/trial-division).
 
-# `count_primes.c`
+## `count_primes.c`
 
 We highly recommend starting the lab by attempting to write a version that works with just a single thread.
 
@@ -53,7 +53,7 @@ There are a couple considerations you may want to make when writing your multith
 
 As usual, your code should have no memory leaks.
 
-# Testing your code
+## Testing your code
 
 There is great resource known as tsan that you can read more about [here](https://courses.engr.illinois.edu/cs241/sp2016/tsan). It is a tool from Google built into clang which can help you detect race conditions in your code.
 
