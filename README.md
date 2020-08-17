@@ -1,10 +1,10 @@
 ># UIUC-CS 241 System Programming
 
-# Why I learn this course
+## Why I learn this course
 
 Compared with CSAPP, the outstanding feature of this course is that it is very friendly to people who have no previous experience in using C. Through the first four labs and the first three MPs, students will gradually be familiar with using C to program. Every week, there are one lab and one MP assignment. Although the amount of the code for each assignment is not very large, it is aimed at the core concepts, and the course website is equipped with very detailed guidance instructions. The logical connection between the projects is very strong, and the difficulty is progressive layer by layer. 
 
-# Course Information
+## Course Information
 
 * Textbook: [WikiBook](https://github.com/angrave/SystemProgramming/wiki)
 * Course website: <http://cs241.cs.illinois.edu/schedule.html>
