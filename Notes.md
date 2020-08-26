@@ -1,6 +1,6 @@
 > # 	UIUC-CS-241: System Programming
 
-# Course Information
+## Course Information
 
 Textbook: [WikiBook](https://github.com/angrave/SystemProgramming/wiki) or CS 241 Course Book in PDF
 
@@ -12,17 +12,17 @@ Labs: <https://courses.engr.illinois.edu/cs241/sp2016/labs.html>
 
 MPs: <https://courses.engr.illinois.edu/cs241/sp2016/mps.html>
 
-# Week 1
+## Week 1
 
 [HW0](https://github.com/angrave/SystemProgramming/wiki/HW0)
 
 [Lab: Know Your Tools](https://courses.engr.illinois.edu/cs241/sp2016/know_your_tools.html)
 
-## 1.System Programming
+### 1.System Programming
 
 开始之前要先完成HW0。
 
-## 2.How to crash in C
+### 2.How to crash in C
 
 [Lecture: Intro to C Notes](https://github.com/angrave/SystemProgramming/wiki/C-Programming%2C-Part-1%3A-Introduction)
 
@@ -248,13 +248,13 @@ comparator gt = greater_than;
 
 This declares a function type comparator that accepts two `void*` params and returns an integer.
 
-# Week 2
+## Week 2
 
 [Lab: Extreme Edge Cases](https://courses.engr.illinois.edu/cs241/sp2016/extreme_edge_cases.html)
 
 [MP: Pointers Gone Wild](https://courses.engr.illinois.edu/cs241/sp2016/pointers_gone_wild.html)
 
-## 3.C Crash Course 2
+### 3.C Crash Course 2
 
 [Lecture: Wikibook C Gotchas](https://github.com/angrave/SystemProgramming/wiki/C-Programming%2C-Part-3%3A-Common-Gotchas)
 
@@ -470,7 +470,7 @@ size: 4, a: 0
 
 The expression passed into `sizeof` is not actually evaluated at runtime in most cases, since the type (hence the size) of the expression can be calculated at compile time. Though there are exceptions in the case of [C99 variable-length arrays](http://port70.net/~nsz/c/c11/n1570.html#6.5.3.4p2), since their sizes are determined at runtime.
 
-## 4.C Crash Course 3
+### 4.C Crash Course 3
 
 [Lecture: Wikibook Input and Output](https://github.com/angrave/SystemProgramming/wiki/C-Programming%2C-Part-2%3A-Text-Input-And-Output)
 
@@ -635,7 +635,7 @@ chars = getline(&buffer, &size, stdin);
 free(buffer);
 ```
 
-## 5. fork and waitpid
+### 5. fork and waitpid
 
 [Lecture: Wikibook forking](https://github.com/angrave/SystemProgramming/wiki/Forking%2C-Part-1%3A-Introduction)
 
@@ -822,13 +822,13 @@ Yes! In fact both processes use the same underlying kernel file descriptor. For 
 
 Both child and parent should `close` (or `fclose`) their file descriptors or file handle respectively.
 
-# Week 3
+## Week 3
 
 [Lab: Utilities Unleashed](https://courses.engr.illinois.edu/cs241/sp2016/utilities_unleashed.html)
 
 [MP: Vector](https://courses.engr.illinois.edu/cs241/sp2016/vector.html)
 
-## 6.Forking Processes
+### 6.Forking Processes
 
 [Lecture: Wikibook Fork, Exec, Wait](https://github.com/angrave/SystemProgramming/wiki/Forking%2C-Part-2%3A-Fork%2C-Exec%2C-Wait)
 
@@ -913,7 +913,7 @@ Eventually there would be insufficient space in the kernel process table to crea
 
 Once a process completes, any of its children will be assigned to "init" - the first process with pid of 1. Thus these children would see getppid() return a value of 1. These orphans will eventually finish and for a brief moment become a zombie. Fortunately, the init process automatically waits for all of its children, thus removing these zombies from the system.
 
-## 7.Signals for Process Control
+### 7.Signals for Process Control
 
 [Lecture: Wikibook process control](https://github.com/angrave/SystemProgramming/wiki/Process-Control%2C-Part-1%3A-Wait-macros%2C-using-signals)
 
@@ -1011,7 +1011,7 @@ kill -9 45
 kill -s TERM 46
 ```
 
-## 8.Thanks for the heap memory
+### 8.Thanks for the heap memory
 
 [Lecture: Wikibook heap memory introduction](https://github.com/angrave/SystemProgramming/wiki/Memory%2C-Part-1%3A-Heap-Memory-Introduction)
 
@@ -1208,13 +1208,13 @@ Since Worst-fit targets the largest unallocated space, it is a poor choice if la
 
 In practice first-fit and next-fit (which is not discussed here) are often common placement strategy. Hybrid approaches and many other alternatives exist (see implementing a memory allocator page).
 
-# Week 4
+## Week 4
 
 [Lab: Mini Valgrind](https://courses.engr.illinois.edu/cs241/sp2016/mini_valgrind.html)
 
 [MP: Text Editor](https://courses.engr.illinois.edu/cs241/sp2016/text_editor.html)
 
-## 9.Memory allocators I
+### 9.Memory allocators I
 
 [wikibook week 4](https://github.com/angrave/SystemProgramming/wiki#week-4)
 
@@ -1239,95 +1239,296 @@ Above is the simplest implementation of malloc, there are a few drawbacks though
 
 
 
-## 10.Memory allocators II
+### 10.Memory allocators II
 
 [wikibook week 4](https://github.com/angrave/SystemProgramming/wiki#week-4)
 
-## 11.Threads
+### 11.Threads
 
 [wikibook week 4](https://github.com/angrave/SystemProgramming/wiki/Pthreads%2C-Part-1%3A-Introduction)
 
 
 
-# Week 5
+## Week 5
 
 [Lab: Mangled Mutexes](https://courses.engr.illinois.edu/cs241/sp2016/mangled_mutexes)
 
 [MP: Malloc](https://courses.engr.illinois.edu/cs241/sp2016/malloc)
 
-## 12.Threads and mutex locks
+### 12.Threads and mutex locks
 
 [wikibook week 4](https://github.com/angrave/SystemProgramming/wiki#week-4)
 
-## 13.Mutexes and semaphores
+### 13.Mutexes and semaphores
 
 [wikibook week 5](https://github.com/angrave/SystemProgramming/wiki#week-5)
 
-## 14.Critical Section Problem
+### 14.Critical Section Problem
 
 [wikibook week 5](https://github.com/angrave/SystemProgramming/wiki#week-6)
 
-# Week 6
+## Week 6
 
 [Lab: Terrible Threads](https://courses.engr.illinois.edu/cs241/sp2016/terrible_threads)
 
-## 15.Critical Section Problem II
+### 15.Critical Section Problem II
 
 [wikibook week 6](https://github.com/angrave/SystemProgramming/wiki#week-6)
 
-## 16.Condition Variables
+### 16.Condition Variables
 
 [wikibook week 6](https://github.com/angrave/SystemProgramming/wiki#week-6)
 
-## 17.Reader Writer Problem
+### 17.Reader Writer Problem
 
 [wikibook week 7](https://github.com/angrave/SystemProgramming/wiki#week-7)
 
-# Week 7
+## Week 7
 
 [Lab: Broken Barriers](https://courses.engr.illinois.edu/cs241/sp2016/broken_barriers)
 
-## 18.Producer Consumer. RW II
+### 18.Producer Consumer. RW II
 
 [wikibook week 7](https://github.com/angrave/SystemProgramming/wiki#week-7)
 
-## 19.Deadlock
+### 19.Deadlock
 
 [wikibook week 7](https://github.com/angrave/SystemProgramming/wiki#week-7)
 
-## 20.Dining Philosophers
+### 20.Dining Philosophers
 
 [wikibook week 8](https://github.com/angrave/SystemProgramming/wiki#week-8)
 
-# Week 8
+## Week 8
 
 [Lab: Overworked Interns](https://courses.engr.illinois.edu/cs241/sp2016/overworked_interns)
 
 [MP: Password Cracker](https://courses.engr.illinois.edu/cs241/sp2016/password_cracker)
 
-## 21.Page tables
+### 21.Page tables
 
 [wikibook week 9](https://github.com/angrave/SystemProgramming/wiki#week-9)
 
-## 22.Pipes and Files
+### 22.Pipes and Files
 
 [wikibook week 9](https://github.com/angrave/SystemProgramming/wiki#week-9)
 
-## 23.Pipes, Files, VM II
+### 23.Pipes, Files, VM II
 
 [wikibook week 9](https://github.com/angrave/SystemProgramming/wiki#week-9)
 
-# Week 9
+## Week 9
 
 [Lab: Ideal Indirection](https://courses.engr.illinois.edu/cs241/sp2016/ideal_indirection)
 
-## 24.Networking Intro
+### 24.Networking Intro
 
 [wikibook week 10](https://github.com/angrave/SystemProgramming/wiki#week-10)
 
-## 25.TCP
+### 25.TCP
 
 [wikibook week 10](https://github.com/angrave/SystemProgramming/wiki#week-10)
+
+
+
+## Synchronization
+
+### Mutex Implementation
+
+参考链接：https://en.cppreference.com/w/c/atomic/atomic_init
+
+```c
+#inclue <stdatomic.h>
+
+/*
+obj	-	pointer to an atomic object to initialize
+desired	-	the value to initialize atomic object with
+*/
+void atomic_init( volatile A* obj, C desired );
+// since c11, C is the non-atomic type corresponding to A.
+```
+
+
+
+参考链接：
+
+* https://en.cppreference.com/w/c/atomic/atomic_compare_exchange
+* [C++11中的内存模型上篇 - 内存模型基础](https://www.codedump.info/post/20191214-cxx11-memory-model-1/)
+* [C++11中的内存模型下篇 - C++11支持的几种内存模型](https://www.codedump.info/post/20191214-cxx11-memory-model-2/)
+* [C++11 并发指南六(atomic 类型详解四 C 风格原子操作介绍)](https://www.cnblogs.com/haippy/p/3306625.html)
+
+```c
+#include <stdatomic.h>
+
+_Bool atomic_compare_exchange_weak_explicit( volatile A *obj,C* expected, C desired, memory_order succ, memory_order fail );
+// since c11
+```
+
+比较`obj`和`expected`的值是否相等
+
+* 相等，则用`desired`的值替换掉`obj`的值，函数返回`true`。
+* 不等，则用`obj`的值替换掉`expected`的值，函数返回`false`。
+
+所以`expected`存储的值永远和`obj`原来存储的值相等（注意是原来的值，或者说旧值）
+
+```c
+#include <stdatomic.h>
+
+typedef struct mutex_{
+    // We need some variable to see if the lock is locked
+    atomic_int_least8_t lock;
+    // A mutex needs to keep track of its owner so
+    // Another thread can’t unlock it
+    pthread_t owner;
+} mutex;
+
+#define UNLOCKED 0
+#define LOCKED 1
+#define UNASSIGNED_OWNER 0
+
+int mutex_init(mutex* mtx){
+    // Some simple error checking
+    if(!mtx){
+    return 0;
+}
+
+// Not thread-safe the user has to take care of this
+atomic_init(&mtx->lock, UNLOCKED);
+    mtx->owner = UNASSIGNED_OWNER;
+    return 1;
+}
+
+int mutex_lock(mutex* mtx){
+    int_least8_t zero = UNLOCKED;
+
+    while(!atomic_compare_exchange_weak_explicit(&mtx->lock, &zero, LOCKED, 
+        memory_order_seq_cst, memory_order_seq_cst)){
+        zero = UNLOCKED;
+        sched_yield(); // Use system calls for scheduling speed
+    }
+
+    // We have the lock now
+    mtx->owner = pthread_self();
+
+    return 1;
+}
+
+int mutex_unlock(mutex* mtx){
+    if(unlikely(pthread_self() != mtx->owner)){
+        return 0; // Can’t unlock a mutex if the thread isn’t the owner
+    }
+
+    int_least8_t one = 1;
+
+    //Critical section ends after this atomic
+    mtx->owner = UNASSIGNED_OWNER;
+    if(!atomic_compare_exchange_strong_explicit(&mtx->lock, &one, UNLOCKED,
+        memory_order_seq_cst, memory_order_seq_cst)){
+        //The mutex was never locked in the first place
+        return 0;
+    }
+
+    return 1;
+}
+```
+
+### Semaphore
+
+参考资料：
+
+* https://docs.oracle.com/cd/E19253-01/819-7051/6n919hpaj/index.html
+
+
+
+```c
+#include <semaphore.h>
+
+// 初始化信号
+/*
+如果 pshared 的值为零，则不能在进程之间共享信号。
+如果 pshared 的值不为零，则可以在进程之间共享信号
+*/
+// 在成功完成之后会返回零。其他任何返回值都表示出现了错误(-1 on error)
+int	sem_init(sem_t *sem, int pshared, unsigned int value);
+
+
+
+```
+
+
+
+### signal safety
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+#include <signal.h>
+#include <semaphore.h>
+#include <unistd.h>
+
+sem_t s;
+
+void handler(int signal) {
+    sem_post(&s); /* Release the Kraken! */
+}
+
+void *singsong(void *param) {
+    sem_wait(&s);
+    printf("Waiting until a signal releases...\n");
+}
+
+int main() {
+    int ok = sem_init(&s, 0, 0);
+
+    if (ok == -1) {
+        perror("Could not create unnamed semaphore");
+        return 1;
+    }
+
+    signal(SIGINT, handler); // Too simple! See Signals chapter
+    
+    pthread_t tid;
+    pthread_create(&tid, NULL, singsong, NULL);
+    pthread_exit(NULL); 
+
+}
+```
+
+这个程序一直不会结束，也不会有任何输出，因为`signal`函数传递`SIGINT`信号，这个信号被忽略了，所以一直无法执行`sem_post`，所以`pthread`的`sem_wait`一直处于等待状态。
+
+
+
+### Condition Variables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

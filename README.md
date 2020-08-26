@@ -14,10 +14,6 @@ Compared with CSAPP, the outstanding feature of this course is that it is very f
 
 **You can see my implementation of each assignment through the following link.**
 
-## Reading Notes
-
-* [UIUC CS-241 System Programming Reading Notes](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/blob/master/UIUC-CS-241%20System%20Programming.md)
-
 ## HW0
 
 * [HW0](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/blob/master/HW0/HW0.md)
@@ -28,7 +24,7 @@ Compared with CSAPP, the outstanding feature of this course is that it is very f
 * Week 2: [Extreme Edge Cases](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Extreme_Edge_Cases)
 * Week 3: [Utilities Unleashed](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Utilities_Unleashed)
 * Week 4: [Mini Valgrind](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/miniValgrind)
-* Week 5: Mangled Mutexes
+* Week 5: [Mangled Mutexes](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Mangled_Mutexes)
 * Week 6: Terrible Threads
 * Week 7: Broken Barriers
 * Week 8: Overworked Interns
