@@ -1451,8 +1451,6 @@ int mutex_unlock(mutex* mtx){
 // 在成功完成之后会返回零。其他任何返回值都表示出现了错误(-1 on error)
 int	sem_init(sem_t *sem, int pshared, unsigned int value);
 
-
-
 ```
 
 

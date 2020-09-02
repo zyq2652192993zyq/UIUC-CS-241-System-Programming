@@ -99,5 +99,45 @@ Helpful Hints and Notes
 
 这个作业往年也叫`luscious_locks`或`critical_concurrency`，考察的方法是一致的。
 
+## Rendezvous 
+
+第一个任务是修改`rendezvous.c`里的程序，使用`semaphore`，两个线程分别执行`a1,a2`和`b1, b2`的任务，现在需要保证`a1, b1`在`a2, b2`前执行。
+
+初看被下面这一大堆莫名奇妙的字符确实让人摸不着头发，但是看了`modifyA_printB`的函数知道每个字符字母序减1。
+
+```
+"J!epo(u!lopx!ipx!nboz!pg!zpv!ibwf!fwfs!nfu!Ejkltusb-!cvu!"
+"zpv!qspcbcmz!lopx!uibu!bssphbodf!jo!dpnqvufs!tdjfodf!jt!"
+"nfbtvsfe!jo!obop.Ejkltusbt/!.!Bmbo!Lbz"
+```
+
+转换完为：
+
+```
+I don't know how many of you have ever met Dijkstra, but
+you probably know that arrogance in computer science is
+measured in nano-Dijkstras. - Alan Kay
+```
+
+这个题目非常类似于在`LeetCode`上的第一个`easy`题，需要让线程的执行顺序按照某种确定的方式运行。这里一个线程去修改（还原到需要打印的字符），并在修改完成后打印，具体来说，`modifyA_printB`是还原A后打印B的内容，相应的，`modifyB_printA`是还原B的内容后打印A的内容。
+
+之所以需要信号量是因为，如果我们不做一些限制，很有可能`modifyA_printB`执行的快一些，已经还原了A，但是此时B还没有还原完成，所以此时打印很可能打印的是不完整的B。
+
+那么我们完全可以用两个信号量去标识是否完成。注意`sem_post`和`sem_wait`的顺序不能反过来，因为如果反过来就造成了死锁。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
