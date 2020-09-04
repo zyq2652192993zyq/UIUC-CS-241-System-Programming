@@ -125,9 +125,52 @@ measured in nano-Dijkstras. - Alan Kay
 
 那么我们完全可以用两个信号量去标识是否完成。注意`sem_post`和`sem_wait`的顺序不能反过来，因为如果反过来就造成了死锁。
 
+最后的输出结果：
 
+```
+quote_B:        The question of whether computers can think is like the question of whether submarines can swim.” - Edsger W. Dijkstra
+quote_A:        I don't know how many of you have ever met Dijkstra, but you probably know that arrogance in computer science is measured in nano-Dijkstras. - Alan Kay
+```
 
+## `semamore`
 
+`semamore`并不是一个真实的库，而是希望我们根据`semamore.h`自己手写来去实现`semaphore`里面的`sem_init, sem_post, sem_wait, sem_destroy`函数。
+
+```c
+#include <pthread.h>
+
+/**
+ * The struct for a Semamore.
+ * It contains the value the Semaphore is initially, as well as its maximum
+ * value (before it should block).
+ * Also contains an associated mutex and condition variable.
+ */
+
+typedef struct {
+
+    int value, max_val;
+
+    pthread_mutex_t m;
+    pthread_cond_t cv;
+
+} Semamore;
+
+// Initializes the members of the Semamore struct.
+void semm_init(Semamore *s, int value, int max_val);
+
+// Blocks when value is at 0, then decrememnts the value once it is not at 0.
+void semm_wait(Semamore *s);
+
+// Blocks when value is at max_val, then increments the value once it is not at
+// max_val.
+void semm_post(Semamore *s);
+
+// Cleans up associated memory with the struct, but does not free the struct
+// itself.
+void semm_destroy(Semamore *s);
+```
+
+可以借助条件变量和互斥量来实现，测试程序就利用`LeetCode`的`1114.Print in Order`来进行测试。
 
 
 
