@@ -1,5 +1,6 @@
 #include "semamore.h"
-#include "next_permutation.h"
+#include "algorithm.h"
+#include <pthread.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,7 +18,7 @@ Foo *create()
 	Foo *obj = (Foo*) malloc(sizeof(Foo));
 
 	obj -> buffer = malloc(17 * sizeof(char));
-	obj -> len = 0;
+	obj -> len    = 0;
 
 	semm_init(&(obj -> firstJobDone), 0, 4);
 	semm_init(&(obj -> secondJobDone), 0, 4);
@@ -87,29 +88,34 @@ void destroy(Foo *obj)
 
 int main()
 {
-	// char *res = "FirstSecondThird";
-	// int seq [] = {1, 2, 3};
+	char *res = "FirstSecondThird";
+	int seq [] = {1, 2, 3};
+	int cnt    = 0;
 
-	// //do {
-	// 	Foo *obj = create();
+	do {
+	    ++cnt;
 
-	// 	pthread_t tid[3];
-	// 	for (int i = 0; i < 3; ++i) {
-	// 		switch (seq[i]) {
-	// 			case 1: pthread_create(&tid[i], NULL, first, (void *)obj); break;
-	// 			case 2: pthread_create(&tid[i], NULL, second, (void *)obj); break;
-	// 			default: pthread_create(&tid[i], NULL, third, (void *)obj);
-	// 		}
-	// 	}
+        Foo *obj = create();
 
-	// 	for (int i = 0; i < 3; ++i) {
-	// 		pthread_join(tid[i], NULL);
-	// 	}
+		pthread_t tid[3];
+		for (int i = 0; i < 3; ++i) {
+			switch (seq[i]) {
+				case 1: pthread_create(&tid[i], NULL, first, (void *)obj); break;
+				case 2: pthread_create(&tid[i], NULL, second, (void *)obj); break;
+				default: pthread_create(&tid[i], NULL, third, (void *)obj);
+			}
+		}
 
-	// 	assert(strcmp(res, obj -> buffer) == 0);
+		for (int i = 0; i < 3; ++i) {
+			pthread_join(tid[i], NULL);
+		}
 
-	// 	destroy(obj);
-	// //} while (next_permutation(seq));
+		assert(strcmp(res, obj -> buffer) == 0);
+
+		destroy(obj);
+	} while (next_permutation(seq, 0, 3));
+
+	printf("%d %s\n", cnt, "tests passed!");
 
 	return 0;
 }
