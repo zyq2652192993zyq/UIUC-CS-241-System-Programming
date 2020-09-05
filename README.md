@@ -25,7 +25,7 @@ Compared with CSAPP, the outstanding feature of this course is that it is very f
 * Week 3: [Utilities Unleashed](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Utilities_Unleashed)
 * Week 4: [Mini Valgrind](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/miniValgrind)
 * Week 5: [Mangled Mutexes](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Mangled_Mutexes)
-* Week 6: Terrible Threads
+* Week 6: [Terrible Threads](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Terrible_Threads)
 * Week 7: Broken Barriers
 * Week 8: Overworked Interns
 * Week 9: Ideal Indirection

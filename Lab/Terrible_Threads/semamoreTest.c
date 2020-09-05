@@ -81,6 +81,7 @@ void destroy(Foo *obj)
 	semm_destroy(&(obj -> firstJobDone));
 	semm_destroy(&(obj -> secondJobDone));
 
+	free(obj -> buffer);
 	free(obj);
 }
 

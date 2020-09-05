@@ -170,9 +170,11 @@ void semm_post(Semamore *s);
 void semm_destroy(Semamore *s);
 ```
 
-可以借助条件变量和互斥量来实现，测试程序就利用`LeetCode`的`1114.Print in Order`来进行测试。`LeetCode`的题目数组时`1,2,3`组成，我们利用这三个数字的全排列，可以构造6组测试用例，在C++里面有`next_permutation`，所以类似的，自己实现一个`algorithm`库，包含`swap, reverse, next_permutation`三个函数，这样就构造了六组测试用例。
+可以借助条件变量和互斥量来实现，测试程序就利用`LeetCode`的`1114.Print in Order`来进行测试。`LeetCode`的题目数组时`1,2,3`组成，我们利用这三个数字的全排列，可以构造6组测试用例，在C++里面有`next_permutation`，所以类似的，自己实现一个`algorithm`库，包含`swap, reverse, next_permutation`三个函数，这样就构造了六组测试用例。最后需要用`valgrind`检查是否存在内存泄漏，我们把它写在`memoryLeakCheck.sh`里面。
 
+## `queue`
 
+这个作业需要我们手动实现一个线程安全的队列这种数据结构。基本上按照`cookbook`里的内容来实现就可以了。
 
 
 
