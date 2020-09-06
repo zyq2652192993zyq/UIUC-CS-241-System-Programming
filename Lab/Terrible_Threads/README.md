@@ -50,7 +50,7 @@ Here you are passed a `Semamore ` struct in which you want to clean up the data.
 
 **NOTE: Do not use semaphores or your `semamore` here.**
 
-Your task is to build a thread safe queue, that also may or may not be bounded, by implementing the functions in `queue.c`. The `maxSize` of the queue can be set to either a positive number or a non-positive number. If positive, your queue will block if the user tries to push when the queue is full. If not positive, your queue should never block upon a push (the queue does not have a max size). Obviously, if your queue is empty then you should block on a pull. You should make use of the node struct to store and retrieve information. In the end, your queue implementation should be able to handle concurrent calls from multiple threads. `queue_init` and queue_destroy will not be called by multiple threads.
+Your task is to build a thread safe queue, that also may or may not be bounded, by implementing the functions in `queue.c`. The `maxSize` of the queue can be set to either a positive number or a non-positive number. If positive, your queue will block if the user tries to push when the queue is full. If not positive, your queue should never block upon a push (the queue does not have a max size). Obviously, if your queue is empty then you should block on a pull. You should make use of the node struct to store and retrieve information. In the end, your queue implementation should be able to handle concurrent calls from multiple threads. `queue_init` and `queue_destroy` will not be called by multiple threads.
 
 The queue is completely independent of the data that the user feeds it. The queue should not attempt to free this data, instead leaving that to the user of the queue.
 
@@ -58,15 +58,15 @@ The queue is completely independent of the data that the user feeds it. The queu
 
 NOTE: This will only ever be called by a single thread!
 
-Before attempting to write `queue_init`, please do read the provided `queue.h` file which defines the queue_t struct. In `queue_init`, you are given a queue_t struct which has already been allocated (no need to directly use malloc here) and a `maxSize` for your queue.
+Before attempting to write `queue_init`, please do read the provided `queue.h` file which defines the `queue_t` struct. In `queue_init`, you are given a `queue_t` struct which has already been allocated (no need to directly use malloc here) and a `maxSize` for your queue.
 
-The value of `maxSize` will change the behavior of your queue when it is positive vs non-positive as described above. Ensure that this is set correctly as well as initializing values within this queue_t struct.
+The value of `maxSize` will change the behavior of your queue when it is positive vs non-positive as described above. Ensure that this is set correctly as well as initializing values within this `queue_t` struct.
 
 ### `queue_push`
 
 NOTE: This can be called by multiple threads!
 
-In `queue_push`, you are given a pointer to a `queue_t` struct as well as a data item. This function should take the given data, create a new node for it (a queue_node_t), and place it on the queue while following the rules we defined above. Specifically, if the queue is bounded (meaning you have a positive number as the `maxSize`) and the queue is full (at that `maxSize` value), then you should block.
+In `queue_push`, you are given a pointer to a `queue_t` struct as well as a data item. This function should take the given data, create a new node for it (a `queue_node_t`), and place it on the queue while following the rules we defined above. Specifically, if the queue is bounded (meaning you have a positive number as the `maxSize`) and the queue is full (at that `maxSize` value), then you should block.
 
 You should be pushing the new node on in constant time. Be careful with the various cases you might run into when inserting the new node (think back to 125/225)! Ensure that you have updated the variables in queue_t properly!
 
@@ -78,7 +78,7 @@ In `queue_pull`, you are given a pointer to a `queue_t` struct. This function sh
 
 You should be getting data to be returned from your queue. Ensure that you have updated the variables in queue_t properly!
 
-### queue_destroy
+### `queue_destroy`
 
 NOTE: This will only ever be called by a single thread!
 
@@ -174,9 +174,7 @@ void semm_destroy(Semamore *s);
 
 ## `queue`
 
-这个作业需要我们手动实现一个线程安全的队列这种数据结构。基本上按照`cookbook`里的内容来实现就可以了。
-
-
+这个作业需要我们手动实现一个线程安全的队列这种数据结构。基本上按照`cookbook`里的内容来实现就可以了。对于队列容量的最大值，可以是正数，也可以是负数。如果是正数，则当队列已满，用户往队列里加入元素会被阻塞。
 
 
 
