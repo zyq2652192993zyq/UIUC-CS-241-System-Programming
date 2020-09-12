@@ -172,3 +172,14 @@ where they should take an increasing amount of time. When testing with different
 这个作业并不需要我们去理解泊松方程是如何计算的，核心点有两个，第一个是需要自己去手动实现`barrier`，第二个是在解决poisson方程的时候，在什么位置如何使用`barrier`。
 
 在实现完`barrier`后，需要去做测试，这里选择使用当时测试`semamore`的程序。然后需要valgrind检测是否存在内存泄漏。
+
+利用给出的四个例子作为测试：
+
+```
+./poisson_test 256 4 50 0.000005
+./poisson_test 512 4 100 0.00005
+./poisson_test 1024 8 150 0.0005
+./poisson_test 2048 8 500 0.0005
+```
+
+然后用`cleanImage.sh`来清除生成的`out_.bmp`文件。

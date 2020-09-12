@@ -15,7 +15,7 @@ int barrier_init(barrier_t *barrier, unsigned num_threads)
 
 	barrier -> n_threads  = num_threads;
 	barrier -> count      = 0;
-	barrier -> times_used = 1;
+	barrier -> times_used = 0;
 
 	return 0;
 }
@@ -24,25 +24,17 @@ int barrier_wait(barrier_t *barrier)
 {
 	pthread_mutex_lock(&barrier -> mtx);
 
-	while (barrier -> times_used != 1) pthread_cond_wait(&barrier -> cv, &barrier -> mtx);
+	unsigned int new_n_threads = barrier -> times_used;
 
 	++barrier -> count;
 
 	if (barrier -> count == barrier -> n_threads) {
-		barrier -> times_used = 0;
-		--barrier -> count;
+		++barrier -> times_used;
+		barrier -> count = 0;
 		pthread_cond_broadcast(&barrier -> cv);
 	}
 	else {
-		while (barrier -> count != barrier -> n_threads && barrier -> times_used == 1) {
-			pthread_cond_wait(&barrier -> cv, &barrier -> mtx);
-		}
-
-		--barrier -> count;
-
-		if (barrier -> count == 0) barrier -> times_used = 1;
-
-		pthread_cond_broadcast(&barrier -> cv);
+		while (barrier -> times_used == new_n_threads) pthread_cond_wait(&barrier -> cv, &barrier -> mtx);
 	}
 
 	pthread_mutex_unlock(&barrier -> mtx);
