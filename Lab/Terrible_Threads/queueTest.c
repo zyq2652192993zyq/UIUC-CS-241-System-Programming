@@ -54,8 +54,8 @@ int main()
 
 	pthread_t tid[4];
 	pthread_create(&tid[0], NULL, producer1, (void *)queue);
-	pthread_create(&tid[1], NULL, producer2, (void *)queue);
 	pthread_create(&tid[2], NULL, consumer1, (void *)queue);
+	pthread_create(&tid[1], NULL, producer2, (void *)queue);
 	pthread_create(&tid[3], NULL, consumer2, (void *)queue);
 
 	for (int i = 0; i < 4; ++i) {
