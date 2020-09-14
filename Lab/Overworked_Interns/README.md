@@ -29,7 +29,7 @@ Your mentor has written a simulation of this scenario with a synchronization str
 
 ## Testing
 
-We provided you with a Makefile.
+We provided you with a `Makefile`.
 
 Typing
 
@@ -61,9 +61,7 @@ then the simulation terminated successfully. This does not mean your solution is
 
 ------
 
-
-
-
+首先需要仔细阅读`simulator.c,  bad_company.c, bad_company.h`的内容，然后覆盖`good_company.c`的内容。
 
 
 
