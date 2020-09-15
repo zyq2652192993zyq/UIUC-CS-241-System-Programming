@@ -165,9 +165,7 @@ where they should take an increasing amount of time. When testing with different
 - Important: [Wiki page](https://github.com/angrave/SystemProgramming/wiki/Synchronization%2C-Part-6%3A-Implementing-a-barrier)
 - Less Important: [Poisson Equation Explanation](https://courses.engr.illinois.edu/cs241/sp2016/images/poisson.pdf)
 
-------
-
-参考资料：https://github.com/kartikagrawal27/Broken_Barriers
+-----
 
 这个作业并不需要我们去理解泊松方程是如何计算的，核心点有两个，第一个是需要自己去手动实现`barrier`，第二个是在解决poisson方程的时候，在什么位置如何使用`barrier`。
 
