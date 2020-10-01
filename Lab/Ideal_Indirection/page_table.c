@@ -1,7 +1,10 @@
 #include "page_table.h"
 #include <unistd.h>
 
-PageTable *PageTable_create() { return calloc(1, sizeof(PageTable)); }
+PageTable *PageTable_create() 
+{ 
+    return (PageTable *)calloc(1, sizeof(PageTable)); 
+}
 
 void *PageTable_get_entry(PageTable *pt, size_t index) {
     usleep(250000);
@@ -21,7 +24,7 @@ void Pagetable_delete_tree(PageTable *base) {
                 for (size_t j = 0; j < PAGETABLE_SIZE; ++j) {
                     PageTable *pt2 = pt1 -> entries[j];
                     if (pt2) {
-                        for (size_t k = 0; k < PAGETABLE_SIZE; ++k) {
+                        for (size_t k = 0; k < PAGETABLE_SIZE; k++) {
                             PageTable *pt3 = pt2 -> entries[k];
                             if (pt3) free(pt3);
                         }

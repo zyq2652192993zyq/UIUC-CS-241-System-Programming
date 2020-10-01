@@ -1,6 +1,6 @@
-#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include <time.h>
 #include <unistd.h>
 #include "mmu.h"
@@ -28,8 +28,7 @@ pthread_mutex_t m = PTHREAD_MUTEX_INITIALIZER;
 // in the following order: 'num_processes', 'num_addresses', 'num_iterations',
 // 'seed'.
 // It is the callers responsibility to free the memory used.
-size_t *arg_parse(int argc, char *argv[]) 
-{
+size_t *arg_parse(int argc, char *argv[]) {
     if (argc != 5) {
         fprintf(
             stderr,
@@ -56,7 +55,7 @@ size_t *arg_parse(int argc, char *argv[])
     }
 
     size_t *args = malloc(num_tokens * sizeof(size_t));
-    for (size_t i = 0; i < num_tokens; i++) {
+    for (size_t i = 0; i < num_tokens; ++i) {
         args[i] = (size_t)tokargs[i];
     }
 
@@ -67,9 +66,7 @@ void *ask_mmu_for_physical_address(void *virtual_address, size_t pid) {
     printf("CPU is asking the MMU what is the physical_address of [%p] is for "
          "pid [%lu] ...\n",
          virtual_address, pid);
-
     void *physical_address = MMU_get_physical_address(mmu, virtual_address, pid);
-
     printf("CPU got [%p]\n\n", physical_address);
 
     return physical_address;
@@ -78,12 +75,12 @@ void *ask_mmu_for_physical_address(void *virtual_address, size_t pid) {
 // Start routine for each thread
 void *get_physical_addresses(void *ptr) {
     process_t *process        = (process_t *)ptr;
-    void **virtual_addresses  = process->virtual_addresses;
+    void **virtual_addresses  = process -> virtual_addresses;
     void **physical_addresses = malloc(num_addresses * sizeof(void *));
-    size_t pid                = process->pid;
-
-    for (size_t i = 0; i < num_iterations; i++) {
-        for (size_t j = 0; j < num_addresses; j++) {
+    size_t pid                = process -> pid;
+  
+    for (size_t i = 0; i < num_iterations; ++i) {
+        for (size_t j = 0; j < num_addresses; ++j) {
             void *virtual_address = virtual_addresses[j];
             pthread_mutex_lock(&m);
 
@@ -113,29 +110,27 @@ int main(int argc, char *argv[]) {
     printf("Running the simulator (with seed: [%lu]) with [%lu] processes "
          "requesting [%lu] addresses [%lu] times each\n\n\n",
          seed, num_processes, num_addresses, num_iterations);
+    
     // Seeding the random number generator
     srand(seed);
     mmu = MMU_create();
     process_t *processes = malloc(sizeof(process_t) * num_processes);
-
+  
     // Generate random process struct (yes this can collide)
-    for (size_t i = 0; i < num_processes; i++) {
-        process_t *process = &processes[i];
-        process -> pid     = rand() % MAX_PROCESS_ID;
-
-        MMU_add_process(mmu, process->pid);
-
-        process->virtual_addresses = malloc(sizeof(void *) * num_addresses);
+    for (size_t i = 0; i < num_processes; ++i) {
+        process_t *process           = &processes[i];
+        process -> pid               = rand() % MAX_PROCESS_ID;
+        process -> virtual_addresses = malloc(sizeof(void *) * num_addresses);
         for (size_t j = 0; j < num_addresses; ++j) {
             // 1 << VIRTUAL_ADDRESS_LENGTH is the same as 2 ^ (VIRTUAL_ADDRESS_LENGTH)
             // which is the max virtual address.
             char *ptr = NULL;
-            process->virtual_addresses[j] = ptr + (rand() % ((size_t)1 << VIRTUAL_ADDRESS_LENGTH));
+            process -> virtual_addresses[j] = ptr + (rand() % ((size_t)1 << VIRTUAL_ADDRESS_LENGTH));
         }
     }
 
     pthread_t *threads = (pthread_t *)malloc(num_processes * sizeof(pthread_t));
-    for (size_t i = 0; i < num_processes; i++) {
+    for (size_t i = 0; i < num_processes; ++i) {
         pthread_create(&threads[i], NULL, get_physical_addresses, &processes[i]);
     }
 
@@ -154,8 +149,8 @@ int main(int argc, char *argv[]) {
     double duration         = seconds_diff + nanoseconds_diff / 1e9;
 
     printf("\n\nSimulation has stopped with the following statistics:\n\n");
-    printf("Number of Page Faults: %lu\n", mmu->num_page_faults);
-    printf("Number of TLB Cache Misses: %lu\n", mmu->num_tlb_misses);
+    printf("Number of Page Faults: %lu\n", mmu -> num_page_faults);
+    printf("Number of TLB Cache Misses: %lu\n", mmu -> num_tlb_misses);
     printf("Time Elapsed: %lf seconds\n", duration);
 
     MMU_delete(mmu);
