@@ -66,7 +66,7 @@ Make two versions of your program. Both should produce the same results, but usi
 
 ## Version 1: `fseek` / `fread`
 
-When reading a node from the file, use **`fseek()`** to jump to the correct posistion and read the node with **`fread()` and/or `fgetc()`**. You may not use `mmap()` for this part.
+When reading a node from the file, use **`fseek()`** to jump to the correct position and read the node with **`fread()` and/or `fgetc()`**. You may not use `mmap()` for this part.
 
 Put the code for this in `lookup1.c`.
 
@@ -84,8 +84,8 @@ Put the code for this in `lookup2.c`.
 
 - Time your program:
   - The timer should start before you open the file
-  - The timer should end after your close(version 1)/unmap(version 2) the file.
-  - Output the duration of your time with printTime()
+  - The timer should end after your `close(version 1)/unmap(version 2)` the file.
+  - Output the duration of your time with `printTime()`
 - Use only the printing function we give you in `utils.h`
 
 ## Sample usage
@@ -121,6 +121,72 @@ Error cases:
 For each word that is found, print its count and its price, where the price is always printed with exactly two digits to the right of the decimal point.
 
 -------
+
+首先可以利用在`prepare_provided`下面的程序简单了解下整个流程：`create_data`需要两个参数`input_file, output_file`，在这里`input_file`就是目录下的可执行文件，`output_file`可以自己定义，`print_file`将输出结果以可读的形式展示，使用方法
+
+```bash
+$ ./create_data input_file out.txt
+$ ./print_file out.txt
+offset 76: "for", count=340, price=$56.93, left=0, right=0
+offset 52: "list", count=30, price=$0.04, left=76, right=120
+offset 120: "program", count=59, price=$0.01, left=0, right=0
+offset 4: "sample", count=10, price=$10.60, left=52, right=28
+offset 96: "this", count=3, price=$0.33, left=0, right=0
+```
+
+做好这个作业的核心需要看`tree.h`内关于数据格式的定义，`sample.data`内的数据是16进制格式的：
+
+```
+4254 5245 3400 0000 1c00 0000 1900 0000
+9a99 2941 7361 6d70 6c65 0000 6000 0000
+0000 0000 1100 0000 b81e a53f 776f 7264
+0000 0000 4c00 0000 7800 0000 0c00 0000
+0ad7 233d 6c69 7374 0000 0000 0000 0000
+0000 0000 0a00 0000 52b8 6342 666f 7200
+0000 0000 0000 0000 0900 0000 c3f5 a83e
+7468 6973 0000 0000 0000 0000 0000 0000
+0300 0000 0ad7 233c 7072 6f67 7261 6d00
+```
+
+```
+sample.data contains this tree:
+                sample
+              /        \
+          list          word
+         /    \         /
+      for   program   this
+
+  offset 4: "sample", count=25, price=$10.60, left=52, right=28
+  offset 28: "word", count=17, price=$1.29, left=96, right=0
+  offset 52: "list", count=12, price=$0.04, left=76, right=120
+  offset 76: "for", count=10, price=$56.93, left=0, right=0
+  offset 96: "this", count=9, price=$0.33, left=0, right=0
+  offset 120: "program", count=3, price=$0.01, left=0, right=0
+```
+
+前4个字符是`BTRE`，需要跳过，所以从34开始的数据才有意义。
+
+```
+34 00 00 00: 代表左子节点的偏移量，34转为十进制是52，意味着左子节点的偏移量在52位置处
+1C 00 00 00: 右子节点的偏移量，同上换算得到偏移量为28
+19 00 00 00: 代表根节点的count数值，换算后为25
+9A 99 29 41: 浮点数，代表价格，换算后得到10.60
+73 61 6D 70 6C 65 00: 代表单词，通过null结尾
+```
+
+所以`lab`的核心内容就是利用`sample.data`内的数据，读入信息，构建一棵二叉树，然后查找信息。`utils`里提供了一些输出需要的函数：
+
+```c
+void printTime(const double time);
+void openFail(const char *file_name);
+void mmapFail(const char *file_name);
+void formatFail(const char *file_name);
+
+void printFound(const char *word, const uint32_t count, const float price);
+void printNotFound(const char *word);
+```
+
+
 
 
 
