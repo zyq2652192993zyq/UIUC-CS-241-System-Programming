@@ -186,7 +186,9 @@ void printFound(const char *word, const uint32_t count, const float price);
 void printNotFound(const char *word);
 ```
 
+第一个试验考察点在于`fseek`的使用，其实就是利用此函数去定位`FILE *fp`的位置。第二个试验是使用`mmap`先将文件映射到`memory`里面，得到一个指向文件头部的指针，现在没有了`fseek`，其实就变成了指针移动的游戏。
 
+这里我们没有传统的先建树，因为已经知道了左右子节点的位置了，树本来已经存在于`sample.data`内，所以每次直接查找即可。
 
 
 
