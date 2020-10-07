@@ -1506,6 +1506,106 @@ int main() {
 
 
 
+## What’s My Address
+
+函数`getifaddrs`：
+
+```c
+#include <sys/types.h>
+#include <ifaddrs.h>
+
+
+struct ifaddrs {
+    struct ifaddrs  *ifa_next;    /* Next item in list */
+    char            *ifa_name;    /* Name of interface */
+    unsigned int     ifa_flags;   /* Flags from SIOCGIFFLAGS */
+    struct sockaddr *ifa_addr;    /* Address of interface */
+    struct sockaddr *ifa_netmask; /* Netmask of interface */
+    union {
+        struct sockaddr *ifu_broadaddr;
+        /* Broadcast address of interface */
+        struct sockaddr *ifu_dstaddr;
+        /* Point-to-point destination address */
+    } ifa_ifu;
+    #define              ifa_broadaddr ifa_ifu.ifu_broadaddr
+    #define              ifa_dstaddr   ifa_ifu.ifu_dstaddr
+    void            *ifa_data;    /* Address-specific data */
+};
+
+int getifaddrs(struct ifaddrs **ifap);
+void freeifaddrs(struct ifaddrs *ifa);
+```
+
+```c
+#include <sys/socket.h>
+#include <netdb.h>
+
+int getnameinfo(const struct sockaddr *addr, socklen_t addrlen, 
+               char *host, socklen_t hostlen,
+               char *serv, socklen_t servlen, int flags);
+```
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
+struct addrinfo {
+    int              ai_flags;
+    int              ai_family;
+    int              ai_socktype;
+    int              ai_protocol;
+    socklen_t        ai_addrlen;
+    struct sockaddr *ai_addr;
+    char            *ai_canonname;
+    struct addrinfo *ai_next;
+};
+
+int getaddrinfo(const char *node, const char *service,
+                const struct addrinfo *hints,
+                struct addrinfo **res);
+
+void freeaddrinfo(struct addrinfo *res);
+
+const char *gai_strerror(int errcode);
+```
+
+
+
+
+
+
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+
+struct addrinfo hints, *infoptr; // So no need to use memset global variables
+
+int main() {
+    hints.ai_family = AF_INET; // AF_INET means IPv4 only addresses
+    // Get the machine addresses
+    int result = getaddrinfo("www.baidu.com", NULL, &hints, &infoptr);
+    if (result) {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(result));
+        exit(1);
+    }
+    struct addrinfo *p;
+    char host[256];
+    for(p = infoptr; p != NULL; p = p->ai_next) {
+        // Get the name for all returned addresses
+        getnameinfo(p->ai_addr, p->ai_addrlen, host, sizeof(host),
+        NULL, 0, NI_NUMERICHOST);
+        puts(host);
+    }
+    freeaddrinfo(infoptr);
+    return 0;
+}
+```
+
 
 
 

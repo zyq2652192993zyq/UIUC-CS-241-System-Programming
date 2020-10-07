@@ -30,7 +30,7 @@ Compared with CSAPP, the outstanding feature of this course is that it is very f
 * Week 8: [Overworked Interns](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Overworked_Interns)
 * Week 9: [Ideal Indirection](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Ideal_Indirection)
 * Week 10: [Mad Mad Access Pattern](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Mad_Mad_Access_Pattern)
-* Week 11: Et tu, Brute?
+* Week 11: [Et tu, Brute?](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Et_tu_Brute)
 * Week 12: Chatroom
 * Week 13: Scheduler
 * Week 14: Epoll Demo
