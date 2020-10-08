@@ -50,10 +50,9 @@ void *run_client(void *information)
         exit(1);
     }
 
-    int check;
-    check = connect(serverSocket, result -> ai_addr, result -> ai_addrlen);
+    int check = connect(serverSocket, result -> ai_addr, result -> ai_addrlen);
     if(check == -1) {
-        perror(NULL);
+        perror("Connect");
         exit(1);
     }
 

@@ -11,14 +11,60 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-void *processClient(void *arg);
-void write_to_clients(const char *message, int len);
 
 int endingServer;
 int serverSocket;
 int clients[MAX_CLIENTS];
 int clientsConnected;
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+// DO NOT MODIFY THIS FUNCTION
+void write_to_clients(const char *message, int len) 
+{
+    for (int i = 0; i < clientsConnected; ++i) {
+        write(clients[i], message, len);
+    }
+}
+
+// DO NOT MODIFY THIS FUNCTION (BUT DO USE IT)
+void *processClient(void *arg) 
+{
+    int client_fd           = *(int *)arg;
+    int client_is_connected = 1;
+
+    while (client_is_connected) {
+        char buffer[MSG_SIZE];
+        int len = 0, num;
+
+        // Read until client sends eof or \n is read
+        while (1) {
+            num = read(client_fd, buffer + len, MSG_SIZE);
+            len += num;
+
+            if (!num) {
+                client_is_connected = 0;
+                break;
+            }
+            if (buffer[len - 1] == '\n') break;
+        }
+
+        // Error or client closed the connection, so time to close this specific
+        // client connection
+        if (!client_is_connected) {
+            printf("User %d left\n", client_fd);
+            break;
+        }
+
+        write_to_clients(buffer, len);
+    }
+
+    close(client_fd);
+    pthread_mutex_lock(&mutex);
+    --clientsConnected;
+    pthread_mutex_unlock(&mutex);
+
+    return NULL;
+}
 
 void close_server() 
 {
@@ -66,6 +112,7 @@ int main(int argc, char **argv)
     }
 
     printf("Waiting for connection...\n");
+
     int client_fd;
     while(1) {
         client_fd = accept(serverSocket, NULL, NULL);
@@ -82,9 +129,9 @@ int main(int argc, char **argv)
 
         if(client_fd != -1){
             pthread_mutex_lock(&mutex);
-            clients[clientsConnected] = (intptr_t)client_fd;
+            clients[clientsConnected] = client_fd;
             ++clientsConnected;
-            pthread_create(&thread1, 0, processClient, (void*)((intptr_t)client_fd));
+            pthread_create(&thread1, 0, processClient, (void*)&client_fd);
             pthread_mutex_unlock(&mutex);
         }
     }
@@ -92,51 +139,4 @@ int main(int argc, char **argv)
     return 0;
 }
 
-// DO NOT MODIFY THIS FUNCTION
-void write_to_clients(const char *message, int len) 
-{
-    for (int i = 0; i < clientsConnected; ++i) {
-        write(clients[i], message, len);
-    }
-}
 
-// DO NOT MODIFY THIS FUNCTION (BUT DO USE IT)
-void *processClient(void *arg) 
-{
-    int client_fd           = (intptr_t)arg;
-    int client_is_connected = 1;
-
-    while (client_is_connected) {
-        char buffer[MSG_SIZE];
-        int len = 0;
-        int num;
-
-        // Read until client sends eof or \n is read
-        while (1) {
-            num = read(client_fd, buffer + len, MSG_SIZE);
-            len += num;
-
-            if (!num) {
-                client_is_connected = 0;
-                break;
-            }
-            if (buffer[len - 1] == '\n') break;
-        }
-
-        // Error or client closed the connection, so time to close this specific
-        // client connection
-        if (!client_is_connected) {
-            printf("User %d left\n", client_fd);
-            break;
-        }
-
-        write_to_clients(buffer, len);
-    }
-
-    close(client_fd);
-    pthread_mutex_lock(&mutex);
-    --clientsConnected;
-    pthread_mutex_unlock(&mutex);
-
-    return NULL;
-}

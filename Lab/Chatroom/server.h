@@ -9,3 +9,6 @@
 // The largest size the message can be that a client
 // sends to the server
 #define MSG_SIZE 256
+
+void *processClient(void *arg);
+void write_to_clients(const char *message, int len);

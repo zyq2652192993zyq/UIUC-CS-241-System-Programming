@@ -21,7 +21,7 @@ void draw_border(WINDOW *screen)
 {
     int x, y, i;
     getmaxyx(screen, y, x);
-    for (i = 1; i < (x - 1); ++i) {
+    for (i = 1; i < x - 1; ++i) {
         mvwprintw(screen, y - 1, i, "-");
     }
 }
@@ -73,7 +73,6 @@ void read_message_from_screen(char **buffer)
 
 void destroy_windows() 
 {
-    // clean up
     delwin(output);
     delwin(boundary);
     delwin(input);

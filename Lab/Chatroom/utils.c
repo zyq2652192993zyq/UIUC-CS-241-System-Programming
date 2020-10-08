@@ -61,7 +61,7 @@ void *read_from_server()
         int len = 0, num;
 
         while (1) {
-            num = read(serverSocket, buffer+len, MSG_SIZE);
+            num = read(serverSocket, buffer + len, MSG_SIZE);
             len += num;
 
             if (!num || num == -1){
@@ -70,6 +70,7 @@ void *read_from_server()
             }
             if (buffer[len - 1] == '\n') break;
         }
+        
         if (connected) {
             buffer[len - 1] = '\0';
             write_message_to_screen("%s\n", buffer);
