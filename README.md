@@ -32,8 +32,8 @@ Compared with CSAPP, the outstanding feature of this course is that it is very f
 * Week 10: [Mad Mad Access Pattern](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Mad_Mad_Access_Pattern)
 * Week 11: [Et tu, Brute?](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Et_tu_Brute)
 * Week 12: [Chatroom](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Chatroom)
-* Week 13: Scheduler
-* Week 14: Epoll Demo
+* Week 13: [Scheduler](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Scheduler)
+* Week 14: [Epoll Demo](https://github.com/zyq2652192993zyq/UIUC-CS-241-System-Programming/tree/master/Lab/Epoll_Demo)
 
 ## Machine Problems
 
